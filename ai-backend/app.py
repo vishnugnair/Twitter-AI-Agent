@@ -224,7 +224,8 @@ app.add_middleware(
         "http://localhost:5173", 
          "http://localhost:5174", 
          "http://localhost:5175",# Local development
-        "https://twitter-growth-agent-1.onrender.com"  # Production frontend
+        "https://twitter-growth-agent-1.onrender.com",
+        "https://twitter-ai-agent-1.onrender.com",  
     ],
     allow_credentials=True,
     allow_methods=["*"],
