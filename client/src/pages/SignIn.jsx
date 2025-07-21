@@ -23,6 +23,10 @@ function SignIn() {
     setLoading(true)
     setError('')
 
+    console.log('🔍 Starting authentication request...')
+    console.log('📝 Form data:', formData)
+    console.log('🌐 API Base URL:', process.env.REACT_APP_API_BASE_URL)
+
     try {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, {
         method: 'POST',
@@ -33,17 +37,57 @@ function SignIn() {
         body: JSON.stringify(formData)
       })
 
+      console.log('📡 Response received:')
+      console.log('   Status:', response.status)
+      console.log('   Status Text:', response.statusText)
+      console.log('   Headers:', Object.fromEntries(response.headers.entries()))
+      console.log('   URL:', response.url)
+
+      // Get the raw response text first
+      const responseText = await response.text()
+      console.log('📄 Raw response text:', responseText)
+      console.log('📄 Response length:', responseText.length)
+
       if (response.ok) {
-        const data = await response.json()
-        console.log('Authentication successful:', data)
-        navigate('/dashboard')
+        try {
+          // Try to parse as JSON only if we have content
+          if (responseText.trim()) {
+            const data = JSON.parse(responseText)
+            console.log('✅ Authentication successful:', data)
+            navigate('/dashboard')
+          } else {
+            console.log('⚠️ Empty response but status is OK')
+            navigate('/dashboard')
+          }
+        } catch (jsonError) {
+          console.error('❌ JSON parsing error:', jsonError)
+          console.log('📄 Failed to parse response:', responseText)
+          setError('Server returned invalid response format')
+        }
       } else {
-        const errorData = await response.json()
-        setError(errorData.detail || 'Authentication failed')
+        try {
+          if (responseText.trim()) {
+            const errorData = JSON.parse(responseText)
+            console.log('❌ Error response data:', errorData)
+            setError(errorData.detail || 'Authentication failed')
+          } else {
+            console.log('❌ Empty error response')
+            setError(`Authentication failed (${response.status}: ${response.statusText})`)
+          }
+        } catch (jsonError) {
+          console.error('❌ Error parsing error response:', jsonError)
+          console.log('📄 Raw error response:', responseText)
+          setError(`Server error (${response.status}: ${response.statusText})`)
+        }
       }
     } catch (err) {
+      console.error('🚨 Network/Request error:', err)
+      console.log('🚨 Error details:', {
+        message: err.message,
+        name: err.name,
+        stack: err.stack
+      })
       setError('Network error. Please try again.')
-      console.error('Authentication error:', err)
     } finally {
       setLoading(false)
     }
