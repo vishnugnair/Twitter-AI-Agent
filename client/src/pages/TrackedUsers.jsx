@@ -13,7 +13,7 @@ function TrackedUsers() {
     setFetchComplete(false)
 
     try {
-      const response = await fetch('https://twitter-growth-agent.onrender.com/scrape_tracked_accounts', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/scrape_tracked_accounts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
@@ -42,7 +42,7 @@ function TrackedUsers() {
     try {
       // For now, I'll use the /users endpoint to get basic info
       // You might need to create a specific endpoint for tracked accounts
-      const response = await fetch('https://twitter-growth-agent.onrender.com/users', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/users`, {
         method: 'GET',
         credentials: 'include'
       })

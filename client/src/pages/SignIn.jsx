@@ -24,7 +24,7 @@ function SignIn() {
     setError('')
 
     try {
-      const response = await fetch('https://twitter-growth-agent.onrender.com/sign-in', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

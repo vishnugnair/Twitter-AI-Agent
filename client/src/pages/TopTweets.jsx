@@ -63,7 +63,7 @@ function TopTweets() {
 
   const fetchUserProfileImage = async () => {
     try {
-      const response = await fetch('https://twitter-growth-agent.onrender.com/get_user_profile_image', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/get_user_profile_image`, {
         method: 'GET',
         credentials: 'include'
       })
@@ -83,7 +83,7 @@ function TopTweets() {
     updateFetchComplete(false)
 
     try {
-      const response = await fetch('https://twitter-growth-agent.onrender.com/scrape_top_tweets', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/scrape_top_tweets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
@@ -112,7 +112,7 @@ function TopTweets() {
     setError('')
 
     try {
-      const response = await fetch('https://twitter-growth-agent.onrender.com/fetch_pending_replies_toptweets', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/fetch_pending_replies_toptweets`, {
         method: 'GET',
         credentials: 'include'
       })
@@ -149,7 +149,7 @@ function TopTweets() {
     }
 
     try {
-      const response = await fetch('https://twitter-growth-agent.onrender.com/handle_reply_action_toptweets', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/handle_reply_action_toptweets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

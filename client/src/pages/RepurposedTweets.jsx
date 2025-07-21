@@ -43,7 +43,7 @@ function RepurposedTweets() {
 
   const fetchUserProfileImage = async () => {
     try {
-      const response = await fetch('https://twitter-growth-agent.onrender.com/get_user_profile_image', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/get_user_profile_image`, {
         method: 'GET',
         credentials: 'include'
       })
@@ -62,7 +62,7 @@ function RepurposedTweets() {
     setError('')
 
     try {
-      const response = await fetch('https://twitter-growth-agent.onrender.com/fetch_pending_repurposed_tweets', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/fetch_pending_repurposed_tweets`, {
         method: 'GET',
         credentials: 'include'
       })
@@ -98,7 +98,7 @@ function RepurposedTweets() {
     }
 
     try {
-      const response = await fetch('https://twitter-growth-agent.onrender.com/handle_repurpose_action_toptweets', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/handle_repurpose_action_toptweets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
