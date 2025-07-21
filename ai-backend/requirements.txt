@@ -1,0 +1,45 @@
+# FastAPI & Server
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Authentication & Security
+python-jose[cryptography]
+passlib[bcrypt]
+python-decouple
+
+# Database
+motor
+pymongo
+pydantic
+pydantic-settings
+
+# HTTP Client
+httpx
+requests-oauthlib
+
+# Social Media APIs
+tweepy
+python-dateutil
+
+# AI Services
+google-generativeai
+
+# LangChain & AI
+langchain
+langchain-pinecone
+langchain-neo4j
+litellm
+
+# Vector & Graph Databases
+mem0ai
+rank-bm25
+pinecone-client
+neo4j
+
+# Task Queue & Caching
+celery[redis]
+redis[hiredis]
+
+# Additional utilities
+typing-extensions
