@@ -10,6 +10,14 @@ function SignIn() {
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
+  // Debug environment variable on component mount
+  console.log('🚀 SignIn component mounted')
+  console.log('🌐 Environment check:', {
+    NODE_ENV: process.env.NODE_ENV,
+    REACT_APP_API_BASE_URL: process.env.REACT_APP_API_BASE_URL,
+    allEnvVars: Object.keys(process.env).filter(key => key.startsWith('REACT_APP_'))
+  })
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -19,6 +27,9 @@ function SignIn() {
   }
 
   const handleSubmit = async (e) => {
+    console.log('🎯 handleSubmit called!')
+    alert('Form submitted - check console for logs')
+    
     e.preventDefault()
     setLoading(true)
     setError('')
