@@ -7,6 +7,7 @@ import RepurposedTweets from './pages/RepurposedTweets'
 import Settings from './pages/Settings'
 import Documentation from './pages/Documentation'
 import Layout from './components/Layout'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
@@ -14,7 +15,11 @@ function App() {
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/documentation" element={<Documentation />} />
-        <Route path="/dashboard" element={<Layout />}>
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }>
           <Route index element={<Navigate to="/dashboard/top-tweets" replace />} />
           <Route path="analytics" element={<div className="p-6"><h1 className="text-2xl font-bold">Analytics</h1><p>Analytics page coming soon...</p></div>} />
           <Route path="settings" element={<Settings />} />

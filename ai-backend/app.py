@@ -543,6 +543,29 @@ class SignInRequest(BaseModel):
     email: str
     password: str
 
+@app.get("/verify-auth")
+async def verify_auth(user_id: str | None = Cookie(None)):
+    """Verify if the user is authenticated via cookie"""
+    if not user_id:
+        raise HTTPException(401, "Unauthorized: user_id cookie missing")
+    
+    try:
+        user = await db.users.find_one({"_id": ObjectId(user_id)})
+        if not user:
+            raise HTTPException(401, "Unauthorized: user not found")
+        
+        return {
+            "authenticated": True,
+            "user": {
+                "id": str(user["_id"]),
+                "email": user["email"],
+                "name": user.get("name"),
+                "twitter_username": user.get("twitter_username", "")
+            }
+        }
+    except Exception as e:
+        raise HTTPException(401, "Unauthorized: invalid user_id")
+
 @app.post("/sign-in", status_code=status.HTTP_200_OK)
 async def sign_in(request: SignInRequest, response: Response):
     """

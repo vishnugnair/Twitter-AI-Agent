@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { API_BASE_URL } from '../config/api'
+import { useAuth } from '../context/AuthContext'
 
 function SignIn() {
   const [formData, setFormData] = useState({
@@ -10,6 +10,7 @@ function SignIn() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -25,22 +26,13 @@ function SignIn() {
     setError('')
 
     try {
-      const response = await fetch(`${API_BASE_URL}/sign-in`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(formData)
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        console.log('Authentication successful:', data)
+      const result = await login(formData)
+      
+      if (result.success) {
+        console.log('Authentication successful:', result.data)
         navigate('/dashboard')
       } else {
-        const errorData = await response.json()
-        setError(errorData.detail || 'Authentication failed')
+        setError(result.error)
       }
     } catch (err) {
       setError('Network error. Please try again.')
@@ -93,22 +85,22 @@ function SignIn() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:cursor-not-allowed max-md:text-base"
+              className="w-full bg-sky-400 hover:bg-sky-500 disabled:bg-sky-300 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center text-lg max-md:py-4 max-md:text-base"
             >
               {loading ? (
-                <div className="flex items-center justify-center">
+                <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
                   Signing in...
-                </div>
+                </>
               ) : (
                 'Sign in'
               )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-8 text-center max-md:mt-6">
             <p className="text-gray-600 text-sm">
-              New to Twitter Growth? Enter your details above to create an account.
+              Don't have an account? Just enter your email and password to create one!
             </p>
           </div>
         </div>
