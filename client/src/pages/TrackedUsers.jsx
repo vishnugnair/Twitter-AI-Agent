@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { API_BASE_URL } from '../config/api'
 
 function TrackedUsers() {
   const [loading, setLoading] = useState(false)
@@ -13,7 +14,7 @@ function TrackedUsers() {
     setFetchComplete(false)
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/scrape_tracked_accounts`, {
+      const response = await fetch(`${API_BASE_URL}/scrape_tracked_accounts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
@@ -42,7 +43,7 @@ function TrackedUsers() {
     try {
       // For now, I'll use the /users endpoint to get basic info
       // You might need to create a specific endpoint for tracked accounts
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/users`, {
+      const response = await fetch(`${API_BASE_URL}/users`, {
         method: 'GET',
         credentials: 'include'
       })

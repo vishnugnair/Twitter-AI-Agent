@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config/api';
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Settings = () => {
 
   const fetchUserSettings = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/get_user_settings`, {
+      const response = await fetch(`${API_BASE_URL}/get_user_settings`, {
         method: 'GET',
         credentials: 'include'
       });
@@ -57,7 +58,7 @@ const Settings = () => {
     setSuccess('');
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/update_twitter_credentials`, {
+      const response = await fetch(`${API_BASE_URL}/update_twitter_credentials`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -105,7 +106,7 @@ const Settings = () => {
       .filter(acc => acc);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/update_target_accounts`, {
+      const response = await fetch(`${API_BASE_URL}/update_target_accounts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -141,7 +142,7 @@ const Settings = () => {
       .filter(kw => kw);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/update_keywords`, {
+      const response = await fetch(`${API_BASE_URL}/update_keywords`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
